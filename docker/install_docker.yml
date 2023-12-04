@@ -4,14 +4,21 @@
   become_method: sudo
   become_user: root
   tasks:
-    - name: Download Docker GPG key
+    - name: Verificar si la clave Docker GPG ya existe
+      stat:
+        path: /usr/share/keyrings/docker-archive-keyring.gpg
+      register: keyfile
+
+    - name: Descargar clave Docker GPG si no existe
       get_url:
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /usr/share/keyrings/docker-archive-keyring.gpg
+      when: not keyfile.stat.exists
 
-    - name: Import Docker GPG key
+    - name: Importar clave Docker GPG
       command: gpg --dearmor --yes -o /usr/share/keyrings/docker-archive-keyring.gpg
+      when: not keyfile.stat.exists
 
-    - name: Mostrar la salida del comando ls
+    - name: Mostrar mensaje de éxito
       debug:
-        msg: "GPG key imported successfully"
+        msg: "Clave GPG importada correctamente"
