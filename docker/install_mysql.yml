@@ -20,10 +20,10 @@
         url: "https://raw.githubusercontent.com/challengerepos/ansibleTest/main/composes/mysql_latest/docker-compose.yml"
         dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
         mode: '0644'
-      # args:
-      #   force_basic_auth: yes
-      #   http_user: "tu_usuario"
-      #   http_password: "{{ mysql_password }}"
+
+    - name: Debug de Variables
+      ansible.builtin.debug:
+        var: mysql_root_password
 
     - name: Cambiar al directorio del docker-compose.yml
       command: docker-compose up -d
