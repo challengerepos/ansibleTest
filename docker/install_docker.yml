@@ -5,7 +5,7 @@
   become_user: root  
   tasks:
     - name: Update the package index
-      command: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg && apt update
+      command: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg --yes && apt update
       register: result
 
     - name: Mostrar la salida del comando ls
