@@ -4,12 +4,14 @@
   become_method: sudo
   become_user: root
   tasks:
-    - name: Update the package index
-      command: >
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg |
-        gpg --dearmor --yes -o /usr/share/keyrings/docker-archive-keyring.gpg
-      register: result
+    - name: Download Docker GPG key
+      get_url:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        dest: /usr/share/keyrings/docker-archive-keyring.gpg
+
+    - name: Import Docker GPG key
+      command: gpg --dearmor --yes -o /usr/share/keyrings/docker-archive-keyring.gpg
 
     - name: Mostrar la salida del comando ls
       debug:
-        var: result.stdout_lines
+        msg: "GPG key imported successfully"
