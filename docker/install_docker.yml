@@ -40,8 +40,9 @@
 
     - name: Update package index after adding repository
       apt:
+        upgrade: yes
         update_cache: yes
-
+        
     - name: Install Docker
       apt:
         name: 
