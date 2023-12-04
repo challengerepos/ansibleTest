@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: Descargar docker-compose.yml desde GitHub
+      get_url:
+        url: "https://raw.githubusercontent.com/challengerepos/ansibleTest/composes/mysql_latest/docker-compose.yml"
+        dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
+        mode: '0644'
+
+    - name: Cambiar al directorio del docker-compose.yml
+      command: cd "/home/administrator/composes/mysql_latest"
+
+    - name: Ejecutar docker-compose up -d
+      command: docker-compose up -d
