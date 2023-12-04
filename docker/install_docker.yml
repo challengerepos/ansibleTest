@@ -14,9 +14,10 @@
         state: present
         filename: docker
 
-    # - name: Actualizar lista de paquetes
-    #   apt:
-    #     update_cache: yes
+    - name: Actualizar lista de paquetes
+      apt:
+        upgrade: yes
+        update_cache: yes
 
     # - name: Instalar dependencias de Docker
     #   apt:
