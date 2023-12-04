@@ -3,6 +3,7 @@
 
   become: true
   become_user: administrator
+  become_method: sudo
   tasks:
     - name: update apt packages
       apt:
