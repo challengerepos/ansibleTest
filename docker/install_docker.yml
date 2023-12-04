@@ -5,7 +5,7 @@
   become_user: root  
   tasks:
     - name: Update the package index
-      command: sudo apt update
+      command: apt update
       register: result
 
     - name: Mostrar la salida del comando ls
