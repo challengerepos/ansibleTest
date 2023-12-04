@@ -1,4 +1,3 @@
-version: v1.0
 name: Ejecutar Playbooks Secuencialmente
 
 agent:
@@ -9,7 +8,7 @@ blocks:
   - name: Playbooks Secuenciales
     task:
       jobs:
-        - name: Instalar Net
+        - name: Instalar Net v1.0
           commands:
             - ansible-playbook tools/install_net.yml
 
