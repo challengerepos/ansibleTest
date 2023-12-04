@@ -10,7 +10,7 @@
         dest: /home/administrator/composes/install_net.yml
 
     - name: Incluir el playbook Install Net
-      import_tasks: /home/administrator/composes/install_net.yml
+      import_playbook: /home/administrator/composes/install_net.yml
 
     # - name: Incluir el playbook Install MySQL
     #   import_playbook: docker/install_mysql.yml
