@@ -5,7 +5,7 @@
   become_user: root
   tasks:
     - name: Incluir el playbook Install Net
-      include: tools/install_net.yml
+      import_tasks: tools/install_net.yml
 
     - name: Incluir el playbook Install MySQL
-      include: docker/install_mysql.yml
+      import_playbook: docker/install_mysql.yml
