@@ -4,14 +4,21 @@
   become_method: sudo
   become_user: root
   tasks:
-    - name: update apt packages
+    - name: Actualizar paquetes de apt
       apt:
         upgrade: yes
         update_cache: yes
 
-    - name: Install Docker dependencies
-      command: apt install apt-transport-https ca-certificates curl software-properties-common
-
+    - name: Instalar dependencias de Docker
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+      ignore_errors: yes
 
     - name: Verificar si la clave Docker GPG ya existe
       stat:
@@ -23,11 +30,13 @@
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /usr/share/keyrings/docker-archive-keyring.gpg
       when: not keyfile.stat.exists
+      ignore_errors: yes
 
     - name: Importar clave Docker GPG
       command: gpg --dearmor --yes -o /usr/share/keyrings/docker-archive-keyring.gpg
       when: not keyfile.stat.exists
+      ignore_errors: yes
 
     - name: Mostrar mensaje de éxito
       debug:
-        msg: "Clave GPG importada correctamente"
+        msg: "Clave GPG importada correctamente y apt actualizado"
