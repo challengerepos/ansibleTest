@@ -4,6 +4,15 @@
   become_method: sudo
   become_user: root
   tasks:
+    - name: update apt packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: Install Docker dependencies
+      command: apt install apt-transport-https ca-certificates curl software-properties-common
+
+
     - name: Verificar si la clave Docker GPG ya existe
       stat:
         path: /usr/share/keyrings/docker-archive-keyring.gpg
