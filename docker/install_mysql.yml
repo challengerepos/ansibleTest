@@ -16,7 +16,6 @@
         mode: '0644'
 
     - name: Cambiar al directorio del docker-compose.yml
-      command: cd "/home/administrator/composes/mysql_latest"
-
-    - name: Ejecutar docker-compose up -d
       command: docker-compose up -d
+      args:
+        chdir: "/home/administrator/composes/mysql_latest"
