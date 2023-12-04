@@ -9,10 +9,10 @@
         state: present
 
     - name: Agregar el repositorio de Docker al sistema
-      lineinfile:
-        path: /etc/apt/sources.list.d/docker.list
-        line: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-        create: yes
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu"
+        state: present
+        filename: docker
 
     - name: Actualizar lista de paquetes
       apt:
