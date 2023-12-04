@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+  become_user: root
+  tasks:
+    - name: Update the package index
+      apt:
+        upgrade: yes
+        update_cache: yes
+
+    - name: Install Network Tools
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nmap
+        - net-tools
+        - curl
+        
