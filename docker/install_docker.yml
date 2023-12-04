@@ -25,9 +25,7 @@
       register: keyfile
 
     - name: Download Docker GPG key if it doesn't exist
-      get_url:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        dest: /usr/share/keyrings/docker-archive-keyring.gpg
+      command: curl -fsSL https://download.docker.com/linux/ubuntu/gpg
       when: not keyfile.stat.exists
 
     - name: Import Docker GPG key
