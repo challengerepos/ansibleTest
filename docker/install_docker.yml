@@ -14,10 +14,13 @@
         state: present
         filename: docker
 
-    - name: Actualizar lista de paquetes
-      apt:
-        upgrade: yes
-        update_cache: yes
+    - name: Ejecutar comando ls
+      command: ls
+      register: result
+
+    - name: Mostrar la salida del comando ls
+      debug:
+        var: result.stdout_lines
 
     # - name: Instalar dependencias de Docker
     #   apt:
