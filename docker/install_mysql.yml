@@ -3,17 +3,27 @@
   become: true
   become_method: sudo
   become_user: root
+  vars:
+    mysql_user: "basicuser"
+    mysql_password: "basicpass"
+    mysql_database: "basicdb"
+    mysql_root_password: "rootpass"
+    mysql_port: 3306  # Puedes cambiar este valor al puerto que desees
   tasks:
     - name: Crear la carpeta de destino si no existe
       ansible.builtin.file:
         path: "/home/administrator/composes/mysql_latest"
         state: directory
 
-    - name: Descargar docker-compose.yml desde GitHub
+    - name: Descargar docker-compose.yml desde GitHub con contraseña
       get_url:
         url: "https://raw.githubusercontent.com/challengerepos/ansibleTest/main/composes/mysql_latest/docker-compose.yml"
         dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
         mode: '0644'
+      args:
+        force_basic_auth: yes
+        http_user: "tu_usuario"
+        http_password: "{{ mysql_password }}"
 
     - name: Cambiar al directorio del docker-compose.yml
       command: docker-compose up -d
