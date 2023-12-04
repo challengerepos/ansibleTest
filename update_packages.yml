@@ -2,8 +2,8 @@
 - hosts: all
 
   become: true
-  become_user: administrator
   become_method: sudo
+  become_user: administrator  
   tasks:
     - name: update apt packages
       apt:
