@@ -4,6 +4,11 @@
   become_method: sudo
   become_user: root
   tasks:
+    - name: Crear la carpeta de destino si no existe
+      ansible.builtin.file:
+      path: "/home/administrator/composes/mysql_latest"
+      state: directory
+      
     - name: Descargar docker-compose.yml desde GitHub
       get_url:
         url: "https://raw.githubusercontent.com/challengerepos/ansibleTest/main/composes/mysql_latest/docker-compose.yml"
