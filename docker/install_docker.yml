@@ -4,12 +4,12 @@
   become_method: sudo
   become_user: root
   tasks:
-    - name: Actualizar paquetes de apt
+    - name: Update the package index
       apt:
         upgrade: yes
         update_cache: yes
 
-    - name: Instalar dependencias de Docker
+    - name: Install Docker dependencies
       apt:
         name: "{{ item }}"
         state: present
@@ -18,25 +18,54 @@
         - ca-certificates
         - curl
         - software-properties-common
-      ignore_errors: yes
 
-    - name: Verificar si la clave Docker GPG ya existe
+    - name: Check if Docker GPG key file exists
       stat:
         path: /usr/share/keyrings/docker-archive-keyring.gpg
       register: keyfile
 
-    - name: Descargar clave Docker GPG si no existe
+    - name: Download Docker GPG key if it doesn't exist
       get_url:
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /usr/share/keyrings/docker-archive-keyring.gpg
       when: not keyfile.stat.exists
-      ignore_errors: yes
 
-    - name: Importar clave Docker GPG
+    - name: Import Docker GPG key
       command: gpg --dearmor --yes -o /usr/share/keyrings/docker-archive-keyring.gpg
       when: not keyfile.stat.exists
-      ignore_errors: yes
 
-    - name: Mostrar mensaje de éxito
-      debug:
-        msg: "Clave GPG importada correctamente y apt actualizado"
+    - name: Add Docker repository
+      blockinfile:
+        path: /etc/apt/sources.list.d/docker.list
+        block: |
+          deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
+
+    - name: Update package index after adding repository
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: 
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+
+    - name: Add user to docker group
+      user:
+        name: "{{ ansible_user }}"
+        append: yes
+        groups: docker
+
+    - name: Verify Docker installation
+      command: docker run hello-world
+
+    - name: Install Docker Compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)"
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+
+    - name: Verify Docker Compose installation
+      command: docker-compose --version
