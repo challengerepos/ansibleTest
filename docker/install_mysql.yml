@@ -6,7 +6,7 @@
   tasks:
     - name: Descargar docker-compose.yml desde GitHub
       get_url:
-        url: "https://raw.githubusercontent.com/challengerepos/ansibleTest/composes/mysql_latest/docker-compose.yml"
+        url: "https://github.com/challengerepos/ansibleTest/composes/mysql_latest/docker-compose.yml"
         dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
         mode: '0644'
 
