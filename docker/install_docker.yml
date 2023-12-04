@@ -14,21 +14,21 @@
         state: present
         filename: docker
 
-    - name: Actualizar lista de paquetes
-      apt:
-        update_cache: yes
+    # - name: Actualizar lista de paquetes
+    #   apt:
+    #     update_cache: yes
 
-    - name: Instalar dependencias de Docker
-      apt:
-        name: "{{ item }}"
-        state: present
-      loop:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - software-properties-common
+    # - name: Instalar dependencias de Docker
+    #   apt:
+    #     name: "{{ item }}"
+    #     state: present
+    #   loop:
+    #     - apt-transport-https
+    #     - ca-certificates
+    #     - curl
+    #     - software-properties-common
 
-    - name: Instalar Docker
-      apt:
-        name: docker-ce
-        state: present
+    # - name: Instalar Docker
+    #   apt:
+    #     name: docker-ce
+    #     state: present
