@@ -22,7 +22,7 @@
 
     - name: Hacer modificaciones en docker-compose.yml con template
       ansible.builtin.template:
-        src: "/home/ciberpunk/testAnsible_mysql/docker-compose.yml"
+        src: "/composes/docker-compose.yml"
         dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
 
     - name: Cambiar al directorio del docker-compose.yml
