@@ -14,10 +14,16 @@
         path: "/home/administrator/composes/mysql_latest"
         state: directory
 
-    - name: Hacer modificaciones en docker-compose.yml con template
-      ansible.builtin.template:
-        src: "/composes/docker-compose.yml"
+    - name: Descargar docker-compose.yml desde GitHub con contraseña
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/challengerepos/ansibleTest/main/composes/mysql_latest/docker-compose.yml"
         dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
+        mode: '0644'
+
+    # - name: Hacer modificaciones en docker-compose.yml con template
+    #   ansible.builtin.template:
+    #     src: "/composes/docker-compose.yml"
+    #     dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
 
     - name: Cambiar al directorio del docker-compose.yml
       command: docker-compose up -d
