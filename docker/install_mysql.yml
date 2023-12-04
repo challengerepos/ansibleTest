@@ -1,4 +1,3 @@
----
 - hosts: all
   become: true
   become_method: sudo
@@ -16,14 +15,15 @@
         state: directory
 
     - name: Descargar docker-compose.yml desde GitHub con contraseña
-      get_url:
+      ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/challengerepos/ansibleTest/main/composes/mysql_latest/docker-compose.yml"
         dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
         mode: '0644'
 
-    - name: Debug de Variables
-      ansible.builtin.debug:
-        var: mysql_root_password
+    - name: Hacer modificaciones en docker-compose.yml con template
+      ansible.builtin.template:
+        src: "/home/ciberpunk/testAnsible_mysql/docker-compose.yml"
+        dest: "/home/administrator/composes/mysql_latest/docker-compose.yml"
 
     - name: Cambiar al directorio del docker-compose.yml
       command: docker-compose up -d
