@@ -9,3 +9,8 @@
       apt:
         upgrade: yes
         update_cache: yes
+    - name: Instalar Midnight Commander (mc)
+      apt:
+        name: mc
+        state: present
+      become_user: root
